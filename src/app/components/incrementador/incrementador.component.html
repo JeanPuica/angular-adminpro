@@ -1,0 +1,21 @@
+<div class="input-group">
+  <span class="input-group-btn">
+    <button [ngClass]="btnClass" type="button" (click)="changeValue(-5)">
+      <i class="fa fa-minus"></i>
+    </button>
+  </span>
+  <input
+    type="number"
+    class="form-control"
+    placeholder="Product name"
+    autocomplete="off"
+    [formControl]="progressControl"
+    [class.is-invalid]="progressControl.invalid"
+    />
+    <!-- [ngClass]="{ 'is-invalid': progressControl.value > 100 || progressControl.value < 0 }" -->
+  <span class="input-group-btn">
+    <button [ngClass]="btnClass" type="button" (click)="changeValue(5)">
+      <i class="fa fa-plus"></i>
+    </button>
+  </span>
+</div>

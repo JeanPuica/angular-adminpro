@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { PagesRoutingModule } from './pages-routing.module';
+import { ComponentsModule } from '../components/components.module';
 import { SharedModule } from '../shared/shared.module';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -22,6 +24,12 @@ import { PagesComponent } from './pages.component';
     Grafica1Component,
     PagesComponent,
   ],
-  imports: [CommonModule, SharedModule, PagesRoutingModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    SharedModule,
+    ComponentsModule,
+    PagesRoutingModule,
+  ],
 })
 export class PagesModule {}
