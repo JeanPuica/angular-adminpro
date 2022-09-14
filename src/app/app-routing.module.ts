@@ -13,7 +13,8 @@ const routes: Routes = [
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
   },
-  { path: '**', component: NopagefoundComponent },
+  { path: 'no-found', component: NopagefoundComponent },
+  { path: '**', redirectTo: 'no-found', pathMatch: 'full' },
 ];
 
 @NgModule({
