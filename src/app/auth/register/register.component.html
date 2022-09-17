@@ -11,7 +11,9 @@
       <form
         class="form-horizontal form-material"
         id="loginform"
-        action="index.html"
+        autocomplete="off"
+        [formGroup]="registerForm"
+        (submit)="registerUser()"
       >
         <a href="javascript:void(0)" class="text-center db"
           ><img src="../assets/images/logo-icon.png" alt="Home" /><br /><img
@@ -25,9 +27,21 @@
             <input
               class="form-control"
               type="text"
-              required=""
               placeholder="Name"
+              formControlName="name"
+              autocomplete="off"
             />
+          </div>
+          <div
+            class="row"
+            *ngIf="
+              registerForm.get('name')?.invalid &&
+              registerForm.get('name')?.touched
+            "
+          >
+            <div class="col text-danger error">
+              El nombre es obligatorio y mayor a 4 caracteres
+            </div>
           </div>
         </div>
         <div class="form-group">
@@ -35,9 +49,19 @@
             <input
               class="form-control"
               type="text"
-              required=""
               placeholder="Email"
+              formControlName="email"
+              autocomplete="off"
             />
+            <div
+              class="row"
+              *ngIf="
+                registerForm.controls['email'].invalid &&
+                registerForm.controls['email'].touched
+              "
+            >
+              <div class="col text-danger error">El email inválido</div>
+            </div>
           </div>
         </div>
         <div class="form-group">
@@ -45,9 +69,20 @@
             <input
               class="form-control"
               type="password"
-              required=""
               placeholder="Password"
+              formControlName="password"
             />
+            <div
+              class="row"
+              *ngIf="
+                registerForm.controls['password'].invalid &&
+                registerForm.controls['password'].touched
+              "
+            >
+              <div class="col text-danger error">
+                La contraseña es obligatoria y mayor a 6 caracteres
+              </div>
+            </div>
           </div>
         </div>
         <div class="form-group">
@@ -55,26 +90,55 @@
             <input
               class="form-control"
               type="password"
-              required=""
               placeholder="Confirm Password"
+              formControlName="password2"
             />
+            <div
+              class="row"
+              *ngIf="
+                registerForm.controls['password2'].invalid &&
+                registerForm.controls['password2'].touched
+              "
+            >
+              <div class="col text-danger error">
+                La contraseña de confimracion es obligatoria y mayor a 6
+                caracteres
+              </div>
+            </div>
           </div>
         </div>
         <div class="form-group row">
           <div class="col-md-12">
             <div class="checkbox checkbox-primary p-t-0">
-              <input id="checkbox-signup" type="checkbox" />
+              <input
+                id="checkbox-signup"
+                type="checkbox"
+                formControlName="terms"
+              />
               <label for="checkbox-signup">
                 I agree to all <a href="#">Terms</a></label
               >
             </div>
+            <div
+              class="row"
+              *ngIf="
+                registerForm.controls['terms'].invalid &&
+                registerForm.controls['terms'].touched
+              "
+            >
+              <div class="col text-danger error">Debe aceptar los términos</div>
+            </div>
           </div>
+        </div>
+        <div class="row" *ngIf="!!errMessage">
+          <div class="col text-danger">{{ errMessage }}</div>
         </div>
         <div class="form-group text-center m-t-20">
           <div class="col-xs-12">
             <button
               class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light"
               type="submit"
+              [disabled]="registerForm.invalid"
             >
               Sign Up
             </button>
@@ -84,7 +148,7 @@
           <div class="col-sm-12 text-center">
             <p>
               Already have an account?
-              <a href="pages-login-2.html" class="text-info m-l-5"
+              <a [routerLink]="['/auth']" class="text-info m-l-5"
                 ><b>Sign In</b></a
               >
             </p>

@@ -35,3 +35,7 @@
   position: absolute;
   height: 100%;
 }
+
+.error {
+  font-size: 12px;
+}
