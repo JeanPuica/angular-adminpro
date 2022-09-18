@@ -1,11 +1,21 @@
+export interface UserI {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+  image: string;
+  google: boolean;
+  role: string;
+}
+
 export class User {
-  constructor(
-    public _id: string,
-    public name: string,
-    public email: string,
-    public password?: string,
-    public img?: string,
-    public google?: boolean,
-    public role?: string,
-  ) {}
+  constructor(public data: UserI) {}
+
+  get imageUrl() {
+    if (this.data.image) {
+      return `/api/upload/users/${this.data.image}`;
+    }
+
+    return '/api/upload/users/no-image';
+  }
 }
