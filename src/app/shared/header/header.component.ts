@@ -13,7 +13,7 @@ import { UserI } from '../../models/user.model';
 export class HeaderComponent implements OnInit, OnDestroy {
   userInfo?: UserI;
   imgUrl = '';
-  usr$?: Subscription;
+  usr$ = new Subscription();
 
   constructor(private router: Router, private userService: UserService) {
     // this.imgUrl = userService.user!.imageUrl;
@@ -34,6 +34,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.usr$?.unsubscribe();
+    this.usr$.unsubscribe();
   }
 }

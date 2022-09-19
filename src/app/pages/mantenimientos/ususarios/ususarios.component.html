@@ -1,0 +1,113 @@
+<div class="row animated fadeIn fast">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Buscar Usuario"
+          autocomplete="off"
+          (keyup)="searchUsers(txtTermino.value)"
+          #txtTermino
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="row animated fadeIn fast" *ngIf="loading && users.length === 0">
+  <div class="col-12">
+    <div class="alert alert-info text-center">
+      <h4 class="alert-heading">Cargando</h4>
+      <i class="fa fa-spin fa-refresh fa-2x"></i>
+      <p class="mb-0">Por favor espere</p>
+    </div>
+  </div>
+</div> -->
+
+<div class="row animated fadeIn fast">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Usuarios</h4>
+        <h6 class="card-subtitle">{{ totalUsers }} usuarios registrados</h6>
+        <div class="table-responsive" style="position: relative">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th class="w100">Avatar</th>
+                <th>Correo</th>
+                <th>Nombre</th>
+                <th class="w140">Role</th>
+                <th class="w100">Auth</th>
+                <th class="text-nowrap w100">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="loading">
+                <td style="height: 0px; width: 0px; display: inherit">
+                  <div class="process"></div>
+                  <div class="process-text">Procesando...</div>
+                </td>
+                <td *ngIf="users.length === 0" colspan="6" class="text-center">
+                  <div>No hay resultados</div>
+                </td>
+              </tr>
+              <tr *ngFor="let user of users">
+                <td class="text-center">
+                  <img
+                    [src]="user.image | myImage: 'users'"
+                    class="avatar cursor"
+                    (click)="openModal(user)"
+                  />
+                </td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.name }}</td>
+                <td>
+                  <select
+                    class="form-control"
+                    [value]="user.role"
+                    (change)="changeRole($event, user)"
+                  >
+                    <option value="ADMIN_ROLE">Admin</option>
+                    <option value="USER_ROLE">User</option>
+                  </select>
+                </td>
+                <td>
+                  <span *ngIf="user.google" class="label label-danger"
+                    >Google</span
+                  >
+                  <span *ngIf="!user.google" class="label label-info"
+                    >Email</span
+                  >
+                </td>
+                <td class="text-nowrap text-center">
+                  <a
+                    [ngStyle]="{
+                      'pointer-events':
+                        currentUser.email === user.email ? 'none' : ''
+                    }"
+                    data-toggle="tooltip"
+                    data-original-title="Borrar"
+                    class="cursor"
+                    (click)="deleteUser(user)"
+                  >
+                    <i class="fa fa-close text-danger"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <button class="btn btn-secondary" (click)="changePage(-5)">
+            Anteriores
+          </button>
+          &nbsp;
+          <button class="btn btn-secondary" (click)="changePage(5)">
+            Siguientes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

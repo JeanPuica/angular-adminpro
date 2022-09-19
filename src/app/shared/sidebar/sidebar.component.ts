@@ -13,7 +13,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   menuItems: any[];
   userInfo?: UserI;
   imgUrl = '';
-  usr$?: Subscription;
+  usr$ = new Subscription();
 
   constructor(
     private sideBarService: SidebarService,
@@ -32,6 +32,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.usr$?.unsubscribe();
+    this.usr$.unsubscribe();
   }
 }

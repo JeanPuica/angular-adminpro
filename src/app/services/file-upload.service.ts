@@ -10,10 +10,6 @@ export class FileUploadService {
   updatePhoto(file: File, type: 'users' | 'medics' | 'hospitals', id: string) {
     const formData = new FormData();
     formData.append('imagen', file);
-    return this.http.put(`/api/upload/${type}/${id}`, formData, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
-      },
-    });
+    return this.http.put(`/api/upload/${type}/${id}`, formData);
   }
 }

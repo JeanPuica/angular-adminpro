@@ -15,7 +15,7 @@ import { FileUploadService } from 'src/app/services/file-upload.service';
 export class PerfilComponent implements OnInit, OnDestroy {
   profileForm: FormGroup;
   userInfo?: UserI;
-  usr$?: Subscription;
+  usr$ = new Subscription();
   imageToUpload: any;
   imgUrl = '';
   imgTemp: any;
@@ -103,6 +103,6 @@ export class PerfilComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.usr$!.unsubscribe();
+    this.usr$.unsubscribe();
   }
 }

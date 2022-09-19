@@ -18,26 +18,18 @@ export class UserService {
   }
 
   get user_id() {
-    return 
+    return;
   }
 
   validToken(): Observable<boolean> {
-    return this.http
-      .get('/api/auth/renew', {
-        headers: {
-          Authorization: `Bearer ${this.token}`,
-        },
-      })
-      .pipe(
-        map(({ token, user }: any) => {
-          // const { email, name, role, id, google, image } = user;
-          // this.user$.next(new User(id, name, email, '', image, google, role));
-          this.user$.next(new User({ ...user }));
-          localStorage.setItem('token', token);
-          return true;
-        }),
-        catchError(() => of(false)) // return new observable
-      );
+    return this.http.get('/api/auth/renew').pipe(
+      map(({ token, user }: any) => {
+        this.user$.next(new User({ ...user }));
+        localStorage.setItem('token', token);
+        return true;
+      }),
+      catchError(() => of(false)) // return new observable
+    );
   }
 
   logout() {
@@ -50,17 +42,30 @@ export class UserService {
       .pipe(tap((resp: any) => localStorage.setItem('token', resp.token)));
   }
 
-  updateUserProfile(data: Pick<UserI, 'email' | 'name' | 'role'>, userId: string) {
-    return this.http.put(`/api/users/${userId}`, data, {
-      headers: {
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+  updateUserProfile(
+    data: Pick<UserI, 'email' | 'name' | 'role'>,
+    userId: string
+  ) {
+    return this.http.put(`/api/users/${userId}`, data);
+  }
+
+  updateUser(data: UserI) {
+    return this.http.put(`/api/users/${data.id}`, data);
   }
 
   login(body: LoginForm) {
     return this.http
       .post('/api/auth', body)
       .pipe(tap((resp: any) => localStorage.setItem('token', resp.token)));
+  }
+
+  loadUsers(from: number = 0) {
+    return this.http.get<{ total: number; users: UserI[] }>('/api/users', {
+      params: { offset: from },
+    });
+  }
+
+  deleteUser(userId: string) {
+    return this.http.delete(`/api/users/${userId}`);
   }
 }

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { PagesRoutingModule } from './pages-routing.module';
+import { MyCommonsModule } from '../commons/my-commons.module';
 import { ComponentsModule } from '../components/components.module';
 import { SharedModule } from '../shared/shared.module';
 
@@ -14,6 +15,7 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { UsusariosComponent } from './mantenimientos/ususarios/ususarios.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { PerfilComponent } from './perfil/perfil.component';
     PromesasComponent,
     RxjsComponent,
     PerfilComponent,
+    UsusariosComponent,
   ],
   exports: [
     DashboardComponent,
@@ -36,6 +39,7 @@ import { PerfilComponent } from './perfil/perfil.component';
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    MyCommonsModule,
     SharedModule,
     ComponentsModule,
     PagesRoutingModule,

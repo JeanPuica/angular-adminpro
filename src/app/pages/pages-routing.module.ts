@@ -10,6 +10,7 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { UsusariosComponent } from './mantenimientos/ususarios/ususarios.component';
 
 const routes: Routes = [
   {
@@ -39,7 +40,21 @@ const routes: Routes = [
         data: { title: 'Promises' },
       },
       { path: 'rxjs', component: RxjsComponent, data: { title: 'Rxjs' } },
-      { path: 'perfil', component: PerfilComponent, data: { title: 'User Info' } },
+      {
+        path: 'perfil',
+        component: PerfilComponent,
+        data: { title: 'User Info' },
+      },
+      { path: '**', redirectTo: '', pathMatch: 'full' },
+    ],
+  },
+  {
+    path: 'manteinment',
+    component: PagesComponent,
+    canActivate: [AuthGuard],
+    children: [
+      { path: 'usuarios', component: UsusariosComponent, data: { title: 'Users' } },
+      { path: '**', redirectTo: 'usuarios', pathMatch: 'full' },
     ],
   },
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
