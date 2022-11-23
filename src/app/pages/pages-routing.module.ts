@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AuthGuard } from '../guards/auth.guard';
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { Grafica1Component } from './grafica1/grafica1.component';
@@ -11,12 +10,14 @@ import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { UsusariosComponent } from './mantenimientos/ususarios/ususarios.component';
+import { HospitalesComponent } from './mantenimientos/hospitales/hospitales.component';
+import { MedicosComponent } from './mantenimientos/medicos/medicos.component';
+import { MedicEditComponent } from './mantenimientos/medicos/edit/edit.component';
 
 const routes: Routes = [
   {
     path: 'dashboard',
     component: PagesComponent,
-    canActivate: [AuthGuard],
     children: [
       { path: '', component: DashboardComponent, data: { title: 'Dashboard' } },
       {
@@ -51,9 +52,11 @@ const routes: Routes = [
   {
     path: 'manteinment',
     component: PagesComponent,
-    canActivate: [AuthGuard],
     children: [
       { path: 'usuarios', component: UsusariosComponent, data: { title: 'Users' } },
+      { path: 'hospitales', component: HospitalesComponent, data: { title: 'Hospitals' } },
+      { path: 'medicos', component: MedicosComponent, data: { title: 'Medics' } },
+      { path: 'medicos/:id', component: MedicEditComponent, data: { title: 'Medics' } },
       { path: '**', redirectTo: 'usuarios', pathMatch: 'full' },
     ],
   },
@@ -64,4 +67,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class PagesRoutingModule {}
+export class PagesRoutingModule { }

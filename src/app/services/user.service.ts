@@ -17,8 +17,14 @@ export class UserService {
     return localStorage.getItem('token') || '';
   }
 
-  get user_id() {
-    return;
+  get user() {
+    return localStorage.getItem('user') || '';
+  }
+
+  setUserSession() {
+    const user = localStorage.getItem('user') || '';
+    const userInfo = JSON.parse(user);
+    this.user$.next(new User({ ...userInfo }));
   }
 
   validToken(): Observable<boolean> {
@@ -26,6 +32,7 @@ export class UserService {
       map(({ token, user }: any) => {
         this.user$.next(new User({ ...user }));
         localStorage.setItem('token', token);
+        localStorage.setItem('user', user);
         return true;
       }),
       catchError(() => of(false)) // return new observable
@@ -34,6 +41,7 @@ export class UserService {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
   }
 
   createUser(body: Partial<RegisterForm>) {
@@ -54,9 +62,12 @@ export class UserService {
   }
 
   login(body: LoginForm) {
-    return this.http
-      .post('/api/auth', body)
-      .pipe(tap((resp: any) => localStorage.setItem('token', resp.token)));
+    return this.http.post('/api/auth', body).pipe(
+      tap((resp: any) => {
+        localStorage.setItem('token', resp.token);
+        localStorage.setItem('user', JSON.stringify(resp.user));
+      })
+    );
   }
 
   loadUsers(from: number = 0) {

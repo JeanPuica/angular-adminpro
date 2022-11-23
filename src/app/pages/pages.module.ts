@@ -16,6 +16,9 @@ import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { UsusariosComponent } from './mantenimientos/ususarios/ususarios.component';
+import { HospitalesComponent } from './mantenimientos/hospitales/hospitales.component';
+import { MedicosComponent } from './mantenimientos/medicos/medicos.component';
+import { MedicEditComponent } from './mantenimientos/medicos/edit/edit.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +31,9 @@ import { UsusariosComponent } from './mantenimientos/ususarios/ususarios.compone
     RxjsComponent,
     PerfilComponent,
     UsusariosComponent,
+    HospitalesComponent,
+    MedicosComponent,
+    MedicEditComponent,
   ],
   exports: [
     DashboardComponent,

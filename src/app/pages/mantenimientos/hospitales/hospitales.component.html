@@ -1,0 +1,107 @@
+<div class="row animated fadeIn fast">
+  <div class="col-12">
+    <div class="card mb-3">
+      <div class="card-body">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Buscar Hospital"
+          autocomplete="off"
+          #txtTermino
+          (keyup)="searchHospitals(txtTermino.value)"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row animated fadeIn fast">
+  <div class="col-12">
+    <div class="mb-3">
+      <button class="btn btn-primary" (click)="openSweetAlert()">
+        <i class="fa fa-hospital-o"></i>
+        Crear Hospital
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="row animated fadeIn fast">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Usuarios</h4>
+        <h6 class="card-subtitle">{{ totalHospitals }} usuarios registrados</h6>
+        <div class="table-responsive" style="position: relative">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th class="w100">Foto</th>
+                <th>Nombre</th>
+                <th class="text-nowrap w100">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let hospital of hospitals; let i = index">
+                <td class="text-center">
+                  <img
+                    class="w100 cursor"
+                    [src]="hospital.img | myImage: 'hospitals'"
+                    [alt]="hospital.name"
+                    (click)="openModal(hospital)"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Nombre del hospital"
+                    [value]="hospital.name"
+                    (keyup)="onNameChange($event, i)"
+                    autocomplete="off"
+                  />
+                </td>
+                <td class="text-nowrap text-center">
+                  <a
+                    (click)="save(hospital)"
+                    data-toggle="tooltip"
+                    data-original-title="Guardar"
+                    class="cursor"
+                  >
+                    <i class="fa fa-pencil text-inverse m-r-10"></i>
+                  </a>
+                  <a
+                    (click)="deleteHospital(hospital)"
+                    data-toggle="tooltip"
+                    data-original-title="Borrar"
+                  >
+                    <i class="fa fa-close text-danger"></i>
+                  </a>
+                </td>
+              </tr>
+              <tr *ngIf="loading">
+                <td style="height: 0px; width: 0px; display: inherit">
+                  <div class="process"></div>
+                  <div class="process-text">Procesando...</div>
+                </td>
+              </tr>
+              <tr *ngIf="hospitals.length === 0">
+                <td colspan="6" class="text-center">
+                  <div>No hay resultados</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <button class="btn btn-secondary" (click)="changePage(-5)">
+            Anteriores
+          </button>
+          &nbsp;
+          <button class="btn btn-secondary" (click)="changePage(5)">
+            Siguientes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
