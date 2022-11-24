@@ -11,7 +11,7 @@ import { UserI, User } from '../models/user.model';
 export class UserService {
   user$ = new BehaviorSubject<User | null>(null);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   get token() {
     return localStorage.getItem('token') || '';
@@ -19,6 +19,11 @@ export class UserService {
 
   get user() {
     return localStorage.getItem('user') || '';
+  }
+
+  get role() {
+    const currentUser = JSON.parse(localStorage.getItem('user') ?? '');
+    return currentUser?.role;
   }
 
   setUserSession() {
@@ -29,9 +34,9 @@ export class UserService {
 
   validToken(): Observable<boolean> {
     return this.http.get('/api/auth/renew').pipe(
-      map(({ token, user }: any) => {
+      map(({ token, user, menu }: any) => {
         this.user$.next(new User({ ...user }));
-        localStorage.setItem('token', token);
+        this.saveCredencials(token, menu);
         localStorage.setItem('user', user);
         return true;
       }),
@@ -39,15 +44,21 @@ export class UserService {
     );
   }
 
+  saveCredencials(token: string, menu: any) {
+    localStorage.setItem('token', token);
+    localStorage.setItem('menu', JSON.stringify(menu));
+  }
+
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('menu');
   }
 
   createUser(body: Partial<RegisterForm>) {
     return this.http
       .post('/api/users', body)
-      .pipe(tap((resp: any) => localStorage.setItem('token', resp.token)));
+      .pipe(tap((resp: any) => this.saveCredencials(resp.token, resp.menu)));
   }
 
   updateUserProfile(
@@ -64,7 +75,7 @@ export class UserService {
   login(body: LoginForm) {
     return this.http.post('/api/auth', body).pipe(
       tap((resp: any) => {
-        localStorage.setItem('token', resp.token);
+        this.saveCredencials(resp.token, resp.menu);
         localStorage.setItem('user', JSON.stringify(resp.user));
       })
     );

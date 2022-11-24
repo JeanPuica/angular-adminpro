@@ -5,11 +5,15 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class SearchsService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   search(type: 'users' | 'medics' | 'hospitals', value: string = '') {
     return this.http.get<{ results: any[] }>(
       `/api/todo/collection/${type}/${value}`
     );
+  }
+
+  globalSearch(term: string) {
+    return this.http.get<any>(`/api/todo/${term}`);
   }
 }

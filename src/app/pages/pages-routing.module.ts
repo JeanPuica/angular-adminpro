@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { AdminGuard } from '../guards/admin.guard';
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { Grafica1Component } from './grafica1/grafica1.component';
@@ -13,6 +14,7 @@ import { UsusariosComponent } from './mantenimientos/ususarios/ususarios.compone
 import { HospitalesComponent } from './mantenimientos/hospitales/hospitales.component';
 import { MedicosComponent } from './mantenimientos/medicos/medicos.component';
 import { MedicEditComponent } from './mantenimientos/medicos/edit/edit.component';
+import { SearchComponent } from './search/search.component';
 
 const routes: Routes = [
   {
@@ -36,6 +38,11 @@ const routes: Routes = [
         data: { title: 'Account Settings' },
       },
       {
+        path: 'search/:term',
+        component: SearchComponent,
+        data: { title: 'Search Results' },
+      },
+      {
         path: 'promesas',
         component: PromesasComponent,
         data: { title: 'Promises' },
@@ -53,7 +60,7 @@ const routes: Routes = [
     path: 'manteinment',
     component: PagesComponent,
     children: [
-      { path: 'usuarios', component: UsusariosComponent, data: { title: 'Users' } },
+      { path: 'usuarios', canActivate: [AdminGuard], component: UsusariosComponent, data: { title: 'Users' } },
       { path: 'hospitales', component: HospitalesComponent, data: { title: 'Hospitals' } },
       { path: 'medicos', component: MedicosComponent, data: { title: 'Medics' } },
       { path: 'medicos/:id', component: MedicEditComponent, data: { title: 'Medics' } },

@@ -10,7 +10,7 @@ import { UserService } from 'src/app/services/user.service';
   styles: [],
 })
 export class SidebarComponent implements OnInit, OnDestroy {
-  menuItems: any[];
+  // menuItems: any[];
   userInfo?: UserI;
   imgUrl = '';
   usr$ = new Subscription();
@@ -18,9 +18,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   constructor(
     private sideBarService: SidebarService,
     private userService: UserService
-  ) {
-    this.menuItems = sideBarService.menu;
-  }
+  ) { }
 
   ngOnInit(): void {
     this.usr$ = this.userService.user$.subscribe((user) => {
@@ -29,6 +27,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
         this.imgUrl = user.imageUrl;
       }
     });
+  }
+
+  get menuItems() {
+    return this.sideBarService.menu;
   }
 
   ngOnDestroy(): void {
